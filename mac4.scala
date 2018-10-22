@@ -1,5 +1,7 @@
 import chisel3._
 import chisel3.util.Enum
+import chisel3.util.switch
+import chisel3.util.is
 //import Chisel.UInt
 
 class Mac4Input extends Bundle {
@@ -22,53 +24,51 @@ class Mac4 extends Module {
   val w = Reg(Vec(4, SInt(16.W)))
   val y = Reg(Vec(4, SInt(16.W)))
 
+  val sIdle::s1::s2::s3::s4::Nil = Enum(5)
+  val state = RegInit(sIdle)
+
   when(io.in.start) {
     x := io.in.x_vec
     w := io.in.w_vec
   }
 
-  val sIdle::s1::s2::s3::s4::Nil = Enum(UInt(), 5)
-
-  val state = RegInit(sIdle)
-
   io.out.done := (state === s4)
   io.out.y_vec := y
 
-  switch (state) {
-    is (sIdle) {
+  //switch (state) {
+    when (state === sIdle) {
       when (io.in.start) {
         state := s1
       }
-    };
-    is (state === s1) {
+    }
+    when (state === s1) {
       y(0) := y(0) + x(0)* w(0)
       y(1) := y(1) + x(1)* w(1)
       y(2) := y(2) + x(2)* w(2)
       y(3) := y(3) + x(3)* w(3)
       state := s2
     }
-    is (state === s2) {
+    when (state === s2) {
       y(0) := y(0) + x(0)* w(0)
       y(1) := y(1) + x(1)* w(1)
       y(2) := y(2) + x(2)* w(2)
       y(3) := y(3) + x(3)* w(3)
       state := s3
     }
-    is (state === s3) {
+    when (state === s3) {
       y(0) := y(0) + x(0)* w(0)
       y(1) := y(1) + x(1)* w(1)
       y(2) := y(2) + x(2)* w(2)
       y(3) := y(3) + x(3)* w(3)
       state := s4
     }
-    is (state === s4) {
+    when (state === s4) {
       y(0) := y(0) + x(0)* w(0)
       y(1) := y(1) + x(1)* w(1)
       y(2) := y(2) + x(2)* w(2)
       y(3) := y(3) + x(3)* w(3)
       state := sIdle
     }
-  }
 }
 
 // Problem:
