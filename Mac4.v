@@ -16,139 +16,159 @@ module Mac4( // @[:@3.2]
   output [15:0] io_out_y_vec_3, // @[:@6.4]
   output        io_out_done // @[:@6.4]
 );
-  reg [15:0] x_0; // @[mac4.scala 23:14:@8.4]
+  reg [15:0] x_0; // @[Mac4.scala 24:14:@8.4]
   reg [31:0] _RAND_0;
-  reg [15:0] x_1; // @[mac4.scala 23:14:@8.4]
+  reg [15:0] x_1; // @[Mac4.scala 24:14:@8.4]
   reg [31:0] _RAND_1;
-  reg [15:0] x_2; // @[mac4.scala 23:14:@8.4]
+  reg [15:0] x_2; // @[Mac4.scala 24:14:@8.4]
   reg [31:0] _RAND_2;
-  reg [15:0] x_3; // @[mac4.scala 23:14:@8.4]
+  reg [15:0] x_3; // @[Mac4.scala 24:14:@8.4]
   reg [31:0] _RAND_3;
-  reg [15:0] w_0; // @[mac4.scala 24:14:@9.4]
+  reg [15:0] w_0; // @[Mac4.scala 25:14:@9.4]
   reg [31:0] _RAND_4;
-  reg [15:0] w_1; // @[mac4.scala 24:14:@9.4]
+  reg [15:0] w_1; // @[Mac4.scala 25:14:@9.4]
   reg [31:0] _RAND_5;
-  reg [15:0] w_2; // @[mac4.scala 24:14:@9.4]
+  reg [15:0] w_2; // @[Mac4.scala 25:14:@9.4]
   reg [31:0] _RAND_6;
-  reg [15:0] w_3; // @[mac4.scala 24:14:@9.4]
+  reg [15:0] w_3; // @[Mac4.scala 25:14:@9.4]
   reg [31:0] _RAND_7;
-  reg [15:0] y_0; // @[mac4.scala 25:14:@10.4]
+  reg  done; // @[Mac4.scala 26:21:@10.4]
   reg [31:0] _RAND_8;
-  reg [15:0] y_1; // @[mac4.scala 25:14:@10.4]
+  reg [15:0] y_0; // @[Mac4.scala 27:18:@16.4]
   reg [31:0] _RAND_9;
-  reg [15:0] y_2; // @[mac4.scala 25:14:@10.4]
+  reg [15:0] y_1; // @[Mac4.scala 27:18:@16.4]
   reg [31:0] _RAND_10;
-  reg [15:0] y_3; // @[mac4.scala 25:14:@10.4]
+  reg [15:0] y_2; // @[Mac4.scala 27:18:@16.4]
   reg [31:0] _RAND_11;
-  reg [2:0] state; // @[mac4.scala 28:22:@11.4]
+  reg [15:0] y_3; // @[Mac4.scala 27:18:@16.4]
   reg [31:0] _RAND_12;
-  wire  _T_153; // @[mac4.scala 35:25:@22.4]
-  wire  _T_154; // @[mac4.scala 39:17:@28.4]
-  wire [2:0] _GEN_8; // @[mac4.scala 40:26:@30.6]
-  wire [2:0] _GEN_9; // @[mac4.scala 39:28:@29.4]
-  wire  _T_155; // @[mac4.scala 44:17:@34.4]
-  wire [31:0] _T_156; // @[mac4.scala 45:26:@36.6]
-  wire [31:0] _GEN_30; // @[mac4.scala 45:20:@37.6]
-  wire [32:0] _T_157; // @[mac4.scala 45:20:@37.6]
-  wire [31:0] _T_158; // @[mac4.scala 45:20:@38.6]
-  wire [31:0] _T_159; // @[mac4.scala 45:20:@39.6]
-  wire [31:0] _T_160; // @[mac4.scala 46:26:@41.6]
-  wire [31:0] _GEN_31; // @[mac4.scala 46:20:@42.6]
-  wire [32:0] _T_161; // @[mac4.scala 46:20:@42.6]
-  wire [31:0] _T_162; // @[mac4.scala 46:20:@43.6]
-  wire [31:0] _T_163; // @[mac4.scala 46:20:@44.6]
-  wire [31:0] _T_164; // @[mac4.scala 47:26:@46.6]
-  wire [31:0] _GEN_32; // @[mac4.scala 47:20:@47.6]
-  wire [32:0] _T_165; // @[mac4.scala 47:20:@47.6]
-  wire [31:0] _T_166; // @[mac4.scala 47:20:@48.6]
-  wire [31:0] _T_167; // @[mac4.scala 47:20:@49.6]
-  wire [31:0] _T_168; // @[mac4.scala 48:26:@51.6]
-  wire [31:0] _GEN_33; // @[mac4.scala 48:20:@52.6]
-  wire [32:0] _T_169; // @[mac4.scala 48:20:@52.6]
-  wire [31:0] _T_170; // @[mac4.scala 48:20:@53.6]
-  wire [31:0] _T_171; // @[mac4.scala 48:20:@54.6]
-  wire [31:0] _GEN_10; // @[mac4.scala 44:25:@35.4]
-  wire [31:0] _GEN_11; // @[mac4.scala 44:25:@35.4]
-  wire [31:0] _GEN_12; // @[mac4.scala 44:25:@35.4]
-  wire [31:0] _GEN_13; // @[mac4.scala 44:25:@35.4]
-  wire [2:0] _GEN_14; // @[mac4.scala 44:25:@35.4]
-  wire  _T_172; // @[mac4.scala 51:17:@58.4]
-  wire [31:0] _GEN_15; // @[mac4.scala 51:25:@59.4]
-  wire [31:0] _GEN_16; // @[mac4.scala 51:25:@59.4]
-  wire [31:0] _GEN_17; // @[mac4.scala 51:25:@59.4]
-  wire [31:0] _GEN_18; // @[mac4.scala 51:25:@59.4]
-  wire [2:0] _GEN_19; // @[mac4.scala 51:25:@59.4]
-  wire  _T_189; // @[mac4.scala 58:17:@82.4]
-  wire [31:0] _GEN_20; // @[mac4.scala 58:25:@83.4]
-  wire [31:0] _GEN_21; // @[mac4.scala 58:25:@83.4]
-  wire [31:0] _GEN_22; // @[mac4.scala 58:25:@83.4]
-  wire [31:0] _GEN_23; // @[mac4.scala 58:25:@83.4]
-  wire [2:0] _GEN_24; // @[mac4.scala 58:25:@83.4]
-  wire [31:0] _GEN_25; // @[mac4.scala 65:25:@107.4]
-  wire [31:0] _GEN_26; // @[mac4.scala 65:25:@107.4]
-  wire [31:0] _GEN_27; // @[mac4.scala 65:25:@107.4]
-  wire [31:0] _GEN_28; // @[mac4.scala 65:25:@107.4]
-  wire [2:0] _GEN_29; // @[mac4.scala 65:25:@107.4]
-  wire [15:0] _GEN_46; // @[mac4.scala 45:12:@40.6 mac4.scala 52:12:@64.6 mac4.scala 59:12:@88.6 mac4.scala 66:12:@112.6]
-  wire [15:0] _GEN_47; // @[mac4.scala 46:12:@45.6 mac4.scala 53:12:@69.6 mac4.scala 60:12:@93.6 mac4.scala 67:12:@117.6]
-  wire [15:0] _GEN_48; // @[mac4.scala 47:12:@50.6 mac4.scala 54:12:@74.6 mac4.scala 61:12:@98.6 mac4.scala 68:12:@122.6]
-  wire [15:0] _GEN_49; // @[mac4.scala 48:12:@55.6 mac4.scala 55:12:@79.6 mac4.scala 62:12:@103.6 mac4.scala 69:12:@127.6]
-  assign _T_153 = state == 3'h4; // @[mac4.scala 35:25:@22.4]
-  assign _T_154 = state == 3'h0; // @[mac4.scala 39:17:@28.4]
-  assign _GEN_8 = io_in_start ? 3'h1 : state; // @[mac4.scala 40:26:@30.6]
-  assign _GEN_9 = _T_154 ? _GEN_8 : state; // @[mac4.scala 39:28:@29.4]
-  assign _T_155 = state == 3'h1; // @[mac4.scala 44:17:@34.4]
-  assign _T_156 = $signed(x_0) * $signed(w_0); // @[mac4.scala 45:26:@36.6]
-  assign _GEN_30 = {{16{y_0[15]}},y_0}; // @[mac4.scala 45:20:@37.6]
-  assign _T_157 = $signed(_GEN_30) + $signed(_T_156); // @[mac4.scala 45:20:@37.6]
-  assign _T_158 = _T_157[31:0]; // @[mac4.scala 45:20:@38.6]
-  assign _T_159 = $signed(_T_158); // @[mac4.scala 45:20:@39.6]
-  assign _T_160 = $signed(x_1) * $signed(w_1); // @[mac4.scala 46:26:@41.6]
-  assign _GEN_31 = {{16{y_1[15]}},y_1}; // @[mac4.scala 46:20:@42.6]
-  assign _T_161 = $signed(_GEN_31) + $signed(_T_160); // @[mac4.scala 46:20:@42.6]
-  assign _T_162 = _T_161[31:0]; // @[mac4.scala 46:20:@43.6]
-  assign _T_163 = $signed(_T_162); // @[mac4.scala 46:20:@44.6]
-  assign _T_164 = $signed(x_2) * $signed(w_2); // @[mac4.scala 47:26:@46.6]
-  assign _GEN_32 = {{16{y_2[15]}},y_2}; // @[mac4.scala 47:20:@47.6]
-  assign _T_165 = $signed(_GEN_32) + $signed(_T_164); // @[mac4.scala 47:20:@47.6]
-  assign _T_166 = _T_165[31:0]; // @[mac4.scala 47:20:@48.6]
-  assign _T_167 = $signed(_T_166); // @[mac4.scala 47:20:@49.6]
-  assign _T_168 = $signed(x_3) * $signed(w_3); // @[mac4.scala 48:26:@51.6]
-  assign _GEN_33 = {{16{y_3[15]}},y_3}; // @[mac4.scala 48:20:@52.6]
-  assign _T_169 = $signed(_GEN_33) + $signed(_T_168); // @[mac4.scala 48:20:@52.6]
-  assign _T_170 = _T_169[31:0]; // @[mac4.scala 48:20:@53.6]
-  assign _T_171 = $signed(_T_170); // @[mac4.scala 48:20:@54.6]
-  assign _GEN_10 = _T_155 ? $signed(_T_159) : $signed({{16{y_0[15]}},y_0}); // @[mac4.scala 44:25:@35.4]
-  assign _GEN_11 = _T_155 ? $signed(_T_163) : $signed({{16{y_1[15]}},y_1}); // @[mac4.scala 44:25:@35.4]
-  assign _GEN_12 = _T_155 ? $signed(_T_167) : $signed({{16{y_2[15]}},y_2}); // @[mac4.scala 44:25:@35.4]
-  assign _GEN_13 = _T_155 ? $signed(_T_171) : $signed({{16{y_3[15]}},y_3}); // @[mac4.scala 44:25:@35.4]
-  assign _GEN_14 = _T_155 ? 3'h2 : _GEN_9; // @[mac4.scala 44:25:@35.4]
-  assign _T_172 = state == 3'h2; // @[mac4.scala 51:17:@58.4]
-  assign _GEN_15 = _T_172 ? $signed(_T_159) : $signed(_GEN_10); // @[mac4.scala 51:25:@59.4]
-  assign _GEN_16 = _T_172 ? $signed(_T_163) : $signed(_GEN_11); // @[mac4.scala 51:25:@59.4]
-  assign _GEN_17 = _T_172 ? $signed(_T_167) : $signed(_GEN_12); // @[mac4.scala 51:25:@59.4]
-  assign _GEN_18 = _T_172 ? $signed(_T_171) : $signed(_GEN_13); // @[mac4.scala 51:25:@59.4]
-  assign _GEN_19 = _T_172 ? 3'h3 : _GEN_14; // @[mac4.scala 51:25:@59.4]
-  assign _T_189 = state == 3'h3; // @[mac4.scala 58:17:@82.4]
-  assign _GEN_20 = _T_189 ? $signed(_T_159) : $signed(_GEN_15); // @[mac4.scala 58:25:@83.4]
-  assign _GEN_21 = _T_189 ? $signed(_T_163) : $signed(_GEN_16); // @[mac4.scala 58:25:@83.4]
-  assign _GEN_22 = _T_189 ? $signed(_T_167) : $signed(_GEN_17); // @[mac4.scala 58:25:@83.4]
-  assign _GEN_23 = _T_189 ? $signed(_T_171) : $signed(_GEN_18); // @[mac4.scala 58:25:@83.4]
-  assign _GEN_24 = _T_189 ? 3'h4 : _GEN_19; // @[mac4.scala 58:25:@83.4]
-  assign _GEN_25 = _T_153 ? $signed(_T_159) : $signed(_GEN_20); // @[mac4.scala 65:25:@107.4]
-  assign _GEN_26 = _T_153 ? $signed(_T_163) : $signed(_GEN_21); // @[mac4.scala 65:25:@107.4]
-  assign _GEN_27 = _T_153 ? $signed(_T_167) : $signed(_GEN_22); // @[mac4.scala 65:25:@107.4]
-  assign _GEN_28 = _T_153 ? $signed(_T_171) : $signed(_GEN_23); // @[mac4.scala 65:25:@107.4]
-  assign _GEN_29 = _T_153 ? 3'h0 : _GEN_24; // @[mac4.scala 65:25:@107.4]
-  assign io_out_y_vec_0 = y_0; // @[mac4.scala 36:16:@24.4]
-  assign io_out_y_vec_1 = y_1; // @[mac4.scala 36:16:@25.4]
-  assign io_out_y_vec_2 = y_2; // @[mac4.scala 36:16:@26.4]
-  assign io_out_y_vec_3 = y_3; // @[mac4.scala 36:16:@27.4]
-  assign io_out_done = state == 3'h4; // @[mac4.scala 35:15:@23.4]
-  assign _GEN_46 = _GEN_25[15:0]; // @[mac4.scala 45:12:@40.6 mac4.scala 52:12:@64.6 mac4.scala 59:12:@88.6 mac4.scala 66:12:@112.6]
-  assign _GEN_47 = _GEN_26[15:0]; // @[mac4.scala 46:12:@45.6 mac4.scala 53:12:@69.6 mac4.scala 60:12:@93.6 mac4.scala 67:12:@117.6]
-  assign _GEN_48 = _GEN_27[15:0]; // @[mac4.scala 47:12:@50.6 mac4.scala 54:12:@74.6 mac4.scala 61:12:@98.6 mac4.scala 68:12:@122.6]
-  assign _GEN_49 = _GEN_28[15:0]; // @[mac4.scala 48:12:@55.6 mac4.scala 55:12:@79.6 mac4.scala 62:12:@103.6 mac4.scala 69:12:@127.6]
+  reg [2:0] state; // @[Mac4.scala 30:22:@17.4]
+  reg [31:0] _RAND_13;
+  wire [15:0] _GEN_4; // @[Mac4.scala 32:21:@18.4]
+  wire [15:0] _GEN_5; // @[Mac4.scala 32:21:@18.4]
+  wire [15:0] _GEN_6; // @[Mac4.scala 32:21:@18.4]
+  wire [15:0] _GEN_7; // @[Mac4.scala 32:21:@18.4]
+  wire [2:0] _GEN_8; // @[Mac4.scala 32:21:@18.4]
+  wire  _T_188; // @[Mac4.scala 42:17:@34.4]
+  wire  _GEN_9; // @[Mac4.scala 42:28:@35.4]
+  wire  _T_190; // @[Mac4.scala 45:17:@38.4]
+  wire [31:0] _T_191; // @[Mac4.scala 46:26:@40.6]
+  wire [31:0] _GEN_47; // @[Mac4.scala 46:20:@41.6]
+  wire [32:0] _T_192; // @[Mac4.scala 46:20:@41.6]
+  wire [31:0] _T_193; // @[Mac4.scala 46:20:@42.6]
+  wire [31:0] _T_194; // @[Mac4.scala 47:26:@44.6]
+  wire [31:0] _GEN_48; // @[Mac4.scala 47:20:@45.6]
+  wire [32:0] _T_195; // @[Mac4.scala 47:20:@45.6]
+  wire [31:0] _T_196; // @[Mac4.scala 47:20:@46.6]
+  wire [31:0] _T_197; // @[Mac4.scala 48:26:@48.6]
+  wire [31:0] _GEN_49; // @[Mac4.scala 48:20:@49.6]
+  wire [32:0] _T_198; // @[Mac4.scala 48:20:@49.6]
+  wire [31:0] _T_199; // @[Mac4.scala 48:20:@50.6]
+  wire [31:0] _T_200; // @[Mac4.scala 49:26:@52.6]
+  wire [31:0] _GEN_50; // @[Mac4.scala 49:20:@53.6]
+  wire [32:0] _T_201; // @[Mac4.scala 49:20:@53.6]
+  wire [31:0] _T_202; // @[Mac4.scala 49:20:@54.6]
+  wire [31:0] _GEN_10; // @[Mac4.scala 45:25:@39.4]
+  wire [31:0] _GEN_11; // @[Mac4.scala 45:25:@39.4]
+  wire [31:0] _GEN_12; // @[Mac4.scala 45:25:@39.4]
+  wire [31:0] _GEN_13; // @[Mac4.scala 45:25:@39.4]
+  wire [15:0] _GEN_14; // @[Mac4.scala 45:25:@39.4]
+  wire [15:0] _GEN_15; // @[Mac4.scala 45:25:@39.4]
+  wire [15:0] _GEN_16; // @[Mac4.scala 45:25:@39.4]
+  wire [15:0] _GEN_17; // @[Mac4.scala 45:25:@39.4]
+  wire [2:0] _GEN_18; // @[Mac4.scala 45:25:@39.4]
+  wire  _T_203; // @[Mac4.scala 53:17:@62.4]
+  wire [31:0] _GEN_19; // @[Mac4.scala 53:25:@63.4]
+  wire [31:0] _GEN_20; // @[Mac4.scala 53:25:@63.4]
+  wire [31:0] _GEN_21; // @[Mac4.scala 53:25:@63.4]
+  wire [31:0] _GEN_22; // @[Mac4.scala 53:25:@63.4]
+  wire [15:0] _GEN_23; // @[Mac4.scala 53:25:@63.4]
+  wire [15:0] _GEN_24; // @[Mac4.scala 53:25:@63.4]
+  wire [15:0] _GEN_25; // @[Mac4.scala 53:25:@63.4]
+  wire [15:0] _GEN_26; // @[Mac4.scala 53:25:@63.4]
+  wire [2:0] _GEN_27; // @[Mac4.scala 53:25:@63.4]
+  wire  _T_216; // @[Mac4.scala 61:17:@86.4]
+  wire [31:0] _GEN_28; // @[Mac4.scala 61:25:@87.4]
+  wire [31:0] _GEN_29; // @[Mac4.scala 61:25:@87.4]
+  wire [31:0] _GEN_30; // @[Mac4.scala 61:25:@87.4]
+  wire [31:0] _GEN_31; // @[Mac4.scala 61:25:@87.4]
+  wire [15:0] _GEN_32; // @[Mac4.scala 61:25:@87.4]
+  wire [15:0] _GEN_33; // @[Mac4.scala 61:25:@87.4]
+  wire [15:0] _GEN_34; // @[Mac4.scala 61:25:@87.4]
+  wire [15:0] _GEN_35; // @[Mac4.scala 61:25:@87.4]
+  wire [2:0] _GEN_36; // @[Mac4.scala 61:25:@87.4]
+  wire  _T_229; // @[Mac4.scala 69:17:@110.4]
+  wire [31:0] _GEN_37; // @[Mac4.scala 69:25:@111.4]
+  wire [31:0] _GEN_38; // @[Mac4.scala 69:25:@111.4]
+  wire [31:0] _GEN_39; // @[Mac4.scala 69:25:@111.4]
+  wire [31:0] _GEN_40; // @[Mac4.scala 69:25:@111.4]
+  wire [2:0] _GEN_45; // @[Mac4.scala 69:25:@111.4]
+  wire  _GEN_46; // @[Mac4.scala 69:25:@111.4]
+  assign _GEN_4 = io_in_start ? io_in_w_vec_0 : w_0; // @[Mac4.scala 32:21:@18.4]
+  assign _GEN_5 = io_in_start ? io_in_w_vec_1 : w_1; // @[Mac4.scala 32:21:@18.4]
+  assign _GEN_6 = io_in_start ? io_in_w_vec_2 : w_2; // @[Mac4.scala 32:21:@18.4]
+  assign _GEN_7 = io_in_start ? io_in_w_vec_3 : w_3; // @[Mac4.scala 32:21:@18.4]
+  assign _GEN_8 = io_in_start ? 3'h1 : state; // @[Mac4.scala 32:21:@18.4]
+  assign _T_188 = state == 3'h0; // @[Mac4.scala 42:17:@34.4]
+  assign _GEN_9 = _T_188 ? 1'h0 : done; // @[Mac4.scala 42:28:@35.4]
+  assign _T_190 = state == 3'h1; // @[Mac4.scala 45:17:@38.4]
+  assign _T_191 = x_0 * w_0; // @[Mac4.scala 46:26:@40.6]
+  assign _GEN_47 = {{16'd0}, y_0}; // @[Mac4.scala 46:20:@41.6]
+  assign _T_192 = _GEN_47 + _T_191; // @[Mac4.scala 46:20:@41.6]
+  assign _T_193 = _T_192[31:0]; // @[Mac4.scala 46:20:@42.6]
+  assign _T_194 = x_1 * w_1; // @[Mac4.scala 47:26:@44.6]
+  assign _GEN_48 = {{16'd0}, y_1}; // @[Mac4.scala 47:20:@45.6]
+  assign _T_195 = _GEN_48 + _T_194; // @[Mac4.scala 47:20:@45.6]
+  assign _T_196 = _T_195[31:0]; // @[Mac4.scala 47:20:@46.6]
+  assign _T_197 = x_2 * w_2; // @[Mac4.scala 48:26:@48.6]
+  assign _GEN_49 = {{16'd0}, y_2}; // @[Mac4.scala 48:20:@49.6]
+  assign _T_198 = _GEN_49 + _T_197; // @[Mac4.scala 48:20:@49.6]
+  assign _T_199 = _T_198[31:0]; // @[Mac4.scala 48:20:@50.6]
+  assign _T_200 = x_3 * w_3; // @[Mac4.scala 49:26:@52.6]
+  assign _GEN_50 = {{16'd0}, y_3}; // @[Mac4.scala 49:20:@53.6]
+  assign _T_201 = _GEN_50 + _T_200; // @[Mac4.scala 49:20:@53.6]
+  assign _T_202 = _T_201[31:0]; // @[Mac4.scala 49:20:@54.6]
+  assign _GEN_10 = _T_190 ? _T_193 : {{16'd0}, y_0}; // @[Mac4.scala 45:25:@39.4]
+  assign _GEN_11 = _T_190 ? _T_196 : {{16'd0}, y_1}; // @[Mac4.scala 45:25:@39.4]
+  assign _GEN_12 = _T_190 ? _T_199 : {{16'd0}, y_2}; // @[Mac4.scala 45:25:@39.4]
+  assign _GEN_13 = _T_190 ? _T_202 : {{16'd0}, y_3}; // @[Mac4.scala 45:25:@39.4]
+  assign _GEN_14 = _T_190 ? io_in_w_vec_0 : _GEN_4; // @[Mac4.scala 45:25:@39.4]
+  assign _GEN_15 = _T_190 ? io_in_w_vec_1 : _GEN_5; // @[Mac4.scala 45:25:@39.4]
+  assign _GEN_16 = _T_190 ? io_in_w_vec_2 : _GEN_6; // @[Mac4.scala 45:25:@39.4]
+  assign _GEN_17 = _T_190 ? io_in_w_vec_3 : _GEN_7; // @[Mac4.scala 45:25:@39.4]
+  assign _GEN_18 = _T_190 ? 3'h2 : _GEN_8; // @[Mac4.scala 45:25:@39.4]
+  assign _T_203 = state == 3'h2; // @[Mac4.scala 53:17:@62.4]
+  assign _GEN_19 = _T_203 ? _T_193 : _GEN_10; // @[Mac4.scala 53:25:@63.4]
+  assign _GEN_20 = _T_203 ? _T_196 : _GEN_11; // @[Mac4.scala 53:25:@63.4]
+  assign _GEN_21 = _T_203 ? _T_199 : _GEN_12; // @[Mac4.scala 53:25:@63.4]
+  assign _GEN_22 = _T_203 ? _T_202 : _GEN_13; // @[Mac4.scala 53:25:@63.4]
+  assign _GEN_23 = _T_203 ? io_in_w_vec_0 : _GEN_14; // @[Mac4.scala 53:25:@63.4]
+  assign _GEN_24 = _T_203 ? io_in_w_vec_1 : _GEN_15; // @[Mac4.scala 53:25:@63.4]
+  assign _GEN_25 = _T_203 ? io_in_w_vec_2 : _GEN_16; // @[Mac4.scala 53:25:@63.4]
+  assign _GEN_26 = _T_203 ? io_in_w_vec_3 : _GEN_17; // @[Mac4.scala 53:25:@63.4]
+  assign _GEN_27 = _T_203 ? 3'h3 : _GEN_18; // @[Mac4.scala 53:25:@63.4]
+  assign _T_216 = state == 3'h3; // @[Mac4.scala 61:17:@86.4]
+  assign _GEN_28 = _T_216 ? _T_193 : _GEN_19; // @[Mac4.scala 61:25:@87.4]
+  assign _GEN_29 = _T_216 ? _T_196 : _GEN_20; // @[Mac4.scala 61:25:@87.4]
+  assign _GEN_30 = _T_216 ? _T_199 : _GEN_21; // @[Mac4.scala 61:25:@87.4]
+  assign _GEN_31 = _T_216 ? _T_202 : _GEN_22; // @[Mac4.scala 61:25:@87.4]
+  assign _GEN_32 = _T_216 ? io_in_w_vec_0 : _GEN_23; // @[Mac4.scala 61:25:@87.4]
+  assign _GEN_33 = _T_216 ? io_in_w_vec_1 : _GEN_24; // @[Mac4.scala 61:25:@87.4]
+  assign _GEN_34 = _T_216 ? io_in_w_vec_2 : _GEN_25; // @[Mac4.scala 61:25:@87.4]
+  assign _GEN_35 = _T_216 ? io_in_w_vec_3 : _GEN_26; // @[Mac4.scala 61:25:@87.4]
+  assign _GEN_36 = _T_216 ? 3'h4 : _GEN_27; // @[Mac4.scala 61:25:@87.4]
+  assign _T_229 = state == 3'h4; // @[Mac4.scala 69:17:@110.4]
+  assign _GEN_37 = _T_229 ? _T_193 : _GEN_28; // @[Mac4.scala 69:25:@111.4]
+  assign _GEN_38 = _T_229 ? _T_196 : _GEN_29; // @[Mac4.scala 69:25:@111.4]
+  assign _GEN_39 = _T_229 ? _T_199 : _GEN_30; // @[Mac4.scala 69:25:@111.4]
+  assign _GEN_40 = _T_229 ? _T_202 : _GEN_31; // @[Mac4.scala 69:25:@111.4]
+  assign _GEN_45 = _T_229 ? 3'h0 : _GEN_36; // @[Mac4.scala 69:25:@111.4]
+  assign _GEN_46 = _T_229 ? 1'h1 : _GEN_9; // @[Mac4.scala 69:25:@111.4]
+  assign io_out_y_vec_0 = y_0; // @[Mac4.scala 38:16:@29.4]
+  assign io_out_y_vec_1 = y_1; // @[Mac4.scala 38:16:@30.4]
+  assign io_out_y_vec_2 = y_2; // @[Mac4.scala 38:16:@31.4]
+  assign io_out_y_vec_3 = y_3; // @[Mac4.scala 38:16:@32.4]
+  assign io_out_done = done; // @[Mac4.scala 39:15:@33.4]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -211,23 +231,27 @@ module Mac4( // @[:@3.2]
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_8 = {1{`RANDOM}};
-  y_0 = _RAND_8[15:0];
+  done = _RAND_8[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_9 = {1{`RANDOM}};
-  y_1 = _RAND_9[15:0];
+  y_0 = _RAND_9[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_10 = {1{`RANDOM}};
-  y_2 = _RAND_10[15:0];
+  y_1 = _RAND_10[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_11 = {1{`RANDOM}};
-  y_3 = _RAND_11[15:0];
+  y_2 = _RAND_11[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_12 = {1{`RANDOM}};
-  state = _RAND_12[2:0];
+  y_3 = _RAND_12[15:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_13 = {1{`RANDOM}};
+  state = _RAND_13[2:0];
   `endif // RANDOMIZE_REG_INIT
   end
 `endif // RANDOMIZE
@@ -244,41 +268,130 @@ module Mac4( // @[:@3.2]
     if (io_in_start) begin
       x_3 <= io_in_x_vec_3;
     end
-    if (io_in_start) begin
+    if (_T_229) begin
       w_0 <= io_in_w_vec_0;
+    end else begin
+      if (_T_216) begin
+        w_0 <= io_in_w_vec_0;
+      end else begin
+        if (_T_203) begin
+          w_0 <= io_in_w_vec_0;
+        end else begin
+          if (_T_190) begin
+            w_0 <= io_in_w_vec_0;
+          end else begin
+            if (io_in_start) begin
+              w_0 <= io_in_w_vec_0;
+            end
+          end
+        end
+      end
     end
-    if (io_in_start) begin
+    if (_T_229) begin
       w_1 <= io_in_w_vec_1;
+    end else begin
+      if (_T_216) begin
+        w_1 <= io_in_w_vec_1;
+      end else begin
+        if (_T_203) begin
+          w_1 <= io_in_w_vec_1;
+        end else begin
+          if (_T_190) begin
+            w_1 <= io_in_w_vec_1;
+          end else begin
+            if (io_in_start) begin
+              w_1 <= io_in_w_vec_1;
+            end
+          end
+        end
+      end
     end
-    if (io_in_start) begin
+    if (_T_229) begin
       w_2 <= io_in_w_vec_2;
+    end else begin
+      if (_T_216) begin
+        w_2 <= io_in_w_vec_2;
+      end else begin
+        if (_T_203) begin
+          w_2 <= io_in_w_vec_2;
+        end else begin
+          if (_T_190) begin
+            w_2 <= io_in_w_vec_2;
+          end else begin
+            if (io_in_start) begin
+              w_2 <= io_in_w_vec_2;
+            end
+          end
+        end
+      end
     end
-    if (io_in_start) begin
+    if (_T_229) begin
       w_3 <= io_in_w_vec_3;
+    end else begin
+      if (_T_216) begin
+        w_3 <= io_in_w_vec_3;
+      end else begin
+        if (_T_203) begin
+          w_3 <= io_in_w_vec_3;
+        end else begin
+          if (_T_190) begin
+            w_3 <= io_in_w_vec_3;
+          end else begin
+            if (io_in_start) begin
+              w_3 <= io_in_w_vec_3;
+            end
+          end
+        end
+      end
     end
-    y_0 <= $signed(_GEN_46);
-    y_1 <= $signed(_GEN_47);
-    y_2 <= $signed(_GEN_48);
-    y_3 <= $signed(_GEN_49);
+    if (reset) begin
+      done <= 1'h0;
+    end else begin
+      if (_T_229) begin
+        done <= 1'h1;
+      end else begin
+        if (_T_188) begin
+          done <= 1'h0;
+        end
+      end
+    end
+    if (reset) begin
+      y_0 <= 16'h0;
+    end else begin
+      y_0 <= _GEN_37[15:0];
+    end
+    if (reset) begin
+      y_1 <= 16'h0;
+    end else begin
+      y_1 <= _GEN_38[15:0];
+    end
+    if (reset) begin
+      y_2 <= 16'h0;
+    end else begin
+      y_2 <= _GEN_39[15:0];
+    end
+    if (reset) begin
+      y_3 <= 16'h0;
+    end else begin
+      y_3 <= _GEN_40[15:0];
+    end
     if (reset) begin
       state <= 3'h0;
     end else begin
-      if (_T_153) begin
+      if (_T_229) begin
         state <= 3'h0;
       end else begin
-        if (_T_189) begin
+        if (_T_216) begin
           state <= 3'h4;
         end else begin
-          if (_T_172) begin
+          if (_T_203) begin
             state <= 3'h3;
           end else begin
-            if (_T_155) begin
+            if (_T_190) begin
               state <= 3'h2;
             end else begin
-              if (_T_154) begin
-                if (io_in_start) begin
-                  state <= 3'h1;
-                end
+              if (io_in_start) begin
+                state <= 3'h1;
               end
             end
           end
