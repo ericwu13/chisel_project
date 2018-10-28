@@ -28,7 +28,6 @@ organization := "edu.berkeley.cs"
 
 version := "3.1.0"
 
-name := "chisel-tutorial"
 
 scalaVersion := "2.11.12"
 

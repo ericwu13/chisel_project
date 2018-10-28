@@ -1,9 +1,7 @@
 package fuck
+
 import chisel3._
-import chisel3.util.Enum
-import chisel3.util.switch
-import chisel3.util.is
-//import Chisel.UInt
+import chisel3.util._
 
 class Mac4Input extends Bundle {
   val start = Input(Bool())
@@ -38,11 +36,11 @@ class Mac4 extends Module {
   io.out.y_vec := y
   io.out.done := done
 
-  //switch (state) {
-    when (state === sIdle) {
+  switch (state) {
+    is (sIdle) {
       done := false.B
     }
-    when (state === s1) {
+    is (s1) {
       y(0) := y(0) + x(0)* w(0)
       y(1) := y(1) + x(1)* w(1)
       y(2) := y(2) + x(2)* w(2)
@@ -50,7 +48,7 @@ class Mac4 extends Module {
       w := io.in.w_vec
       state := s2
     }
-    when (state === s2) {
+    is (s2) {
       y(0) := y(0) + x(0)* w(0)
       y(1) := y(1) + x(1)* w(1)
       y(2) := y(2) + x(2)* w(2)
@@ -58,7 +56,7 @@ class Mac4 extends Module {
       w := io.in.w_vec
       state := s3
     }
-    when (state === s3) {
+    is (s3) {
       y(0) := y(0) + x(0)* w(0)
       y(1) := y(1) + x(1)* w(1)
       y(2) := y(2) + x(2)* w(2)
@@ -66,7 +64,7 @@ class Mac4 extends Module {
       w := io.in.w_vec
       state := s4
     }
-    when (state === s4) {
+    is (s4) {
       y(0) := y(0) + x(0)* w(0)
       y(1) := y(1) + x(1)* w(1)
       y(2) := y(2) + x(2)* w(2)
@@ -75,6 +73,7 @@ class Mac4 extends Module {
       state := sIdle
       done := true.B
     }
+  }
 }
 
 // Problem:
