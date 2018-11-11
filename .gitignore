@@ -1,4 +1,4 @@
-target/
+*target/
 .*.swp
 *.swp
 test_run_dir/
