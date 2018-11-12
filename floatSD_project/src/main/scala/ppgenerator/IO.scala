@@ -1,6 +1,12 @@
 package ppgenerator
 import chisel3._
 
+class Float12 extends Bundle {
+  val sign = Bool()
+  val exponent = UInt(8.W)
+  val mantissa = UInt(3.W)
+}
+
 class Float32 extends Bundle {
   val sign = Bool()
   val exponent = UInt(8.W)

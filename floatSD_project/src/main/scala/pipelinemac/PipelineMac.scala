@@ -6,7 +6,7 @@ import ppgenerator._
 import signadder._
 
 class MacInput(val grpnum: Int) extends Bundle {
-	val input_x = Input(Vec(9, new Float32()))
+	val input_x = Input(Vec(9, new Float12()))
 	val input_w = Input(Vec(9, new FloatSD(grpnum)))
 	val skip = Input(UInt(9.W))
 }
@@ -17,13 +17,13 @@ class PipelineMac(val grpnum: Int) extends Module {
 		val out = Output(new Float32())
     })
 	// input reg
-	val input_x_reg = Reg(Vec(9, new Float32()))
+	val input_x_reg = Reg(Vec(9, new Float12()))
 	val input_w_reg = Reg(Vec(9, new FloatSD(grpnum)))
-	val skip_bit_vector = Reg(UInt(9.W))
+	val skip_1_reg = Reg(UInt(9.W))
 	for(i <- 0 until 9) {
 		input_x_reg(i) := Mux(io.in.skip(i) === 0.U(1.W), io.in.input_x(i), input_x_reg(i))
 	}
-	skip_bit_vector := io.in.skip
+	skip_1_reg := io.in.skip
 
 	// pp generation
 	val pp = Wire(Vec(9, Vec(2, UInt((3*grpnum+3+1).W))))
@@ -39,5 +39,21 @@ class PipelineMac(val grpnum: Int) extends Module {
 
 	// max exp determination
 	val max_exp = Wire(UInt(9.W))
+
+	// 1st stage pipeline reg
+	val pp_reg = Reg(Vec(9, Vec(2, UInt((3*grpnum+3+1).W))))
+	val exp_reg  = Reg(Vec(9, UInt(9.W)))
+	val max_exp_reg  = Reg(Vec(9, UInt(9.W)))
+	val skip_2_reg = Reg(UInt(9.W))
+	for(i <- 0 until 9) {
+		pp_reg(i)(0) := Mux(skip_1_reg(8-i) === 0.U(1.W), pp(i)(0), pp_reg(i)(0))
+		pp_reg(i)(1) := Mux(skip_1_reg(8-i) === 0.U(1.W), pp(i)(0), pp_reg(i)(0))
+		exp_reg(i) := Mux(skip_1_reg(8-i) === 0.U(1.W), exp(i), exp_reg(i)(0))
+		max_exp_reg(i) := Mux(skip_1_reg(8-i) === 0.U(1.W), max_exp(i), max_exp_reg(i)(0))
+	}
+	skip_2_reg := skip_1_reg
+
+	// align
+	val align_pp = Wire(Vec(9, Vec(2, UInt((3*grpnum+3+15).W))))
 
 }
