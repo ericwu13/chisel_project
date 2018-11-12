@@ -56,4 +56,14 @@ class PipelineMac(val grpnum: Int) extends Module {
 	// align
 	val align_pp = Wire(Vec(9, Vec(2, UInt((3*grpnum+3+15).W))))
 
+
+	// sign adder
+	val sign_result = Wire(UInt(6.W))
+	val sign_adder_io = Module(new SignAdder()).io
+	for(i <- 0 until 9) {
+		sign_adder_io.in(i)(0) := ~skip_2_reg(8-i)&align_pp(i)(0)(23)
+		sign_adder_io.in(i)(1) := ~skip_2_reg(8-i)&align_pp(i)(1)(23)
+	}
+	sign_result := sign_adder_io.out
+
 }
