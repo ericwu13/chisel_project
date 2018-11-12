@@ -3,7 +3,7 @@ circuit PPGenerator :
   module PPGenerator : 
     input clock : Clock
     input reset : UInt<1>
-    output io : {flip in : {input : {sign : UInt<1>, exponent : UInt<8>, mantissa : UInt<23>}, weight : {grps : UInt<3>[2], exponent : UInt<8>}}, out : {pp_1 : UInt<13>, pp_2 : UInt<13>, exponent : UInt<9>}}
+    output io : {flip in : {input : {sign : UInt<1>, exponent : UInt<8>, mantissa : UInt<23>}, weight : {grps : UInt<3>[2], exponent : UInt<8>}}, out : {pp_1 : UInt<10>, pp_2 : UInt<10>, exponent : UInt<9>}}
     
     wire pp1_tmp : UInt<9> @[PPGenerator.scala 21:21]
     wire pp2_tmp : UInt<9> @[PPGenerator.scala 22:21]
@@ -28,11 +28,10 @@ circuit PPGenerator :
     node _T_69 = xor(io.in.input.sign, _T_68) @[PPGenerator.scala 27:39]
     node _T_70 = cat(_T_69, pp1_tmp) @[Cat.scala 30:58]
     io.out.pp_1 <= _T_70 @[PPGenerator.scala 27:15]
-    node _T_71 = bits(io.in.weight.grps[1], 2, 2) @[PPGenerator.scala 28:61]
+    node _T_71 = bits(io.in.weight.grps[0], 2, 2) @[PPGenerator.scala 28:61]
     node _T_72 = xor(io.in.input.sign, _T_71) @[PPGenerator.scala 28:39]
     node _T_73 = cat(_T_72, pp2_tmp) @[Cat.scala 30:58]
     io.out.pp_2 <= _T_73 @[PPGenerator.scala 28:15]
     node _T_74 = add(io.in.input.exponent, io.in.weight.exponent) @[PPGenerator.scala 29:43]
-    node _T_75 = tail(_T_74, 1) @[PPGenerator.scala 29:43]
-    io.out.exponent <= _T_75 @[PPGenerator.scala 29:19]
+    io.out.exponent <= _T_74 @[PPGenerator.scala 29:19]
     
