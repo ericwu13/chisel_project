@@ -13,7 +13,7 @@ class SignAdder extends Module {
   val tmp_3 = Wire(Vec(2, (UInt(4.W))))
   val tmp_4 = Wire(UInt(5.W))
   for(i <- 0 until 9) {
-    tmp_1(i) := io.in((2*i))(0) + io.in((2*i+1))(1)
+    tmp_1(i) := io.in(i)(0) + io.in(i)(1)
   }
   for(i <- 0 until 4) {
     tmp_2(i) := tmp_1((2*i)) + tmp_1((2*i+1))
