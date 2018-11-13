@@ -1,7 +1,8 @@
+package norm
 import chisel3._
 import chisel3.util._
 import chisel3.iotesters.{ChiselFlatSpec, Driver, PeekPokeTester}
-class final_norm_noSUB(width: Int, output_width: Int) extends Module {
+class final_norm_noSUB(val width: Int, val output_width: Int) extends Module {
     val io = IO(new Bundle {
             val input_exp = Input(UInt(9.W))
             val PP_sum = Input(UInt((width+1).W))
