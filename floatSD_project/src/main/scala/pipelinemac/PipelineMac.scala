@@ -58,8 +58,8 @@ class PipelineMac(val grpnum: Int) extends Module {
 	for(i <- 0 until 9) {
 		pp_reg(i)(0) := Mux(skip_1_reg(8-i) === 0.U(1.W), pp(i)(0), pp_reg(i)(0))
 		pp_reg(i)(1) := Mux(skip_1_reg(8-i) === 0.U(1.W), pp(i)(0), pp_reg(i)(0))
-		exp_reg(i) := Mux(skip_1_reg(8-i) === 0.U(1.W), exp(i), exp_reg(i)(0))
-		max_exp_reg(i) := Mux(skip_1_reg(8-i) === 0.U(1.W), max_exp(i), max_exp_reg(i)(0))
+		exp_reg(i) := Mux(skip_1_reg(8-i) === 0.U(1.W), exp(i), exp_reg(i))
+		max_exp_reg(i) := Mux(skip_1_reg(8-i) === 0.U(1.W), max_exp, max_exp_reg(i))
 	}
 	skip_2_reg := skip_1_reg
 
@@ -103,13 +103,14 @@ class PipelineMac(val grpnum: Int) extends Module {
 	val tree_adder_io = Module(new treeadder(5,8,3,23,23)).io
 	val out = Wire(UInt(28.W))
 	for(i <- 0 until 9) {
-		tree_adder_io.in(2*i) := align_pp_tree(2*i)(0)
-		tree_adder_io.in(2*i+1) := align_pp_tree(2*i+1)(0)
+		align_pp_tree(i)(0) := Mux(skip_3_reg(8-i), align_pp_reg(i)(0), 0.U(24.W))
+		align_pp_tree(i)(1) := Mux(skip_3_reg(8-i), align_pp_reg(i)(1), 0.U(24.W))
 	}
+
 	out := tree_adder_io.out
 	for(i <- 0 until 9) {
-		align_pp_tree(i)(0) := Mux(skip_3_reg(8-i), align_pp_reg(i)(0), 0.U(24.W))
-		align_pp_tree(i)(0) := Mux(skip_3_reg(8-i), align_pp_reg(i)(1), 0.U(24.W))
+		tree_adder_io.in(2*i) := align_pp_tree(i)(0)
+		tree_adder_io.in(2*i+1) := align_pp_tree(i)(1)
 	}
 	// adder tree module here
 	val skip_4 = Wire(UInt(1.W))

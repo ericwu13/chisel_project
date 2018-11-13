@@ -2,10 +2,10 @@ package treeadder
 import chisel3._
 import chisel3.util._
 
-class treeadder(sig_width: Int, exp_width: Int, 
-                grp_size: Int, threshold: Int, adding_width:Int) extends Module {
+class treeadder(val sig_width: Int, val exp_width: Int, 
+                val grp_size: Int, val threshold: Int, adding_width:Int) extends Module {
     val io = IO(new Bundle {
-        val sign_bit = Input(UInt(6.W))
+        //val sign_bit = Input(UInt(6.W))
         val in = Input(Vec(18, UInt((adding_width).W)))
         val out = Output(UInt((adding_width+5).W))
     })
