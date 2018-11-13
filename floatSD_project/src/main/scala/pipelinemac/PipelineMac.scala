@@ -7,6 +7,7 @@ import signadder._
 import align._
 import max_exp_determ._
 import norm._
+import treeadder._
 
 class MacInput(val grpnum: Int) extends Bundle {
 	val input_x = Input(Vec(9, new Float12()))
@@ -99,13 +100,18 @@ class PipelineMac(val grpnum: Int) extends Module {
 
 	// adder tree
 	val align_pp_tree = Wire(Vec(9, Vec(2, UInt((3*grpnum+3+15).W))))
+	val tree_adder_io = Module(new treeadder(5,8,3,23,23)).io
 	val out = Wire(UInt(28.W))
+	for(i <- 0 until 9) {
+		tree_adder_io.in(2*i) := align_pp_tree(2*i)(0)
+		tree_adder_io.in(2*i+1) := align_pp_tree(2*i+1)(0)
+	}
+	out := tree_adder_io.out
 	for(i <- 0 until 9) {
 		align_pp_tree(i)(0) := Mux(skip_3_reg(8-i), align_pp_reg(i)(0), 0.U(24.W))
 		align_pp_tree(i)(0) := Mux(skip_3_reg(8-i), align_pp_reg(i)(1), 0.U(24.W))
 	}
 	// adder tree module here
-
 	val skip_4 = Wire(UInt(1.W))
 	skip_4 := skip_3_reg.andR
 
