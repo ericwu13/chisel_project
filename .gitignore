@@ -2,3 +2,4 @@
 .*.swp
 *.swp
 test_run_dir/
+*.DS*
