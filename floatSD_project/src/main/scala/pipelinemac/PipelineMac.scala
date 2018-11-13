@@ -86,9 +86,6 @@ class PipelineMac(val grpnum: Int) extends Module {
 	}
 	sign_result := sign_adder_io.out
 
-<<<<<<< HEAD
-}
-=======
 	// 2nd stage pipline reg
 	val align_pp_reg = Reg(Vec(9, Vec(2, UInt((3*grpnum+3+15).W))))
 	val sign_result_reg = Reg(UInt(6.W))
@@ -161,4 +158,3 @@ class PipelineMac(val grpnum: Int) extends Module {
 object PipelineMac extends App {
   chisel3.Driver.execute(args, () => new PipelineMac(2))
 }
->>>>>>> fec2f0b6e2b7cbe367e3117e4ef3d09963944e5b
