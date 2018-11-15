@@ -25,10 +25,10 @@ class Align_CG2(val sig_width: Int, val exp_width: Int, val grp_size: Int) exten
     pp2_pad := Cat(io.in.pp2(8, 0), 0.U(14.W))
     val pp1_shift = Wire(UInt((sig_width + grp_size + grp_size + 15).W))
     val pp2_shift = Wire(UInt((sig_width + grp_size + grp_size + 15).W))
-    pp1_shift := pp1_pad >> io.in.max_exp- io.in.exp
-    pp2_shift := pp2_pad >> io.in.max_exp- io.in.exp
+    pp1_shift := pp1_pad >> (io.in.max_exp- io.in.exp)
+    pp2_shift := pp2_pad >> (io.in.max_exp- io.in.exp)
     
     io.out.align_pp1 := Mux(io.in.pp1(9), ~pp1_shift + 1.U((sig_width + grp_size + grp_size + 15).W) , pp1_shift)
-    io.out.align_pp2 := Mux(io.in.pp2(9), ~pp2_shift+ 1.U((sig_width + grp_size + grp_size + 15).W) , pp2_shift)
+    io.out.align_pp2 := Mux(io.in.pp2(9), ~pp2_shift + 1.U((sig_width + grp_size + grp_size + 15).W) , pp2_shift)
     
 }

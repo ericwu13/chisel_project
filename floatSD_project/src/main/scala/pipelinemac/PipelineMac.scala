@@ -25,12 +25,13 @@ class PipelineMac(val grpnum: Int) extends Module {
 	val input_w_reg = Reg(Vec(9, new FloatSD(grpnum)))
 	val skip_1_reg = Reg(UInt(9.W))
 	for(i <- 0 until 9) {
-		input_x_reg(i) := Mux(io.in.skip(i) === 0.U(1.W), io.in.input_x(i), input_x_reg(i))
+		input_x_reg(i) := Mux(io.in.skip(8-i) === 0.U(1.W), io.in.input_x(i), input_x_reg(i))
+		input_w_reg(i) := Mux(io.in.skip(8-i) === 0.U(1.W), io.in.input_w(i), input_w_reg(i))
 	}
 	skip_1_reg := io.in.skip
 
 	// pp generation
-	val pp = Wire(Vec(9, Vec(2, UInt((3*grpnum+3+1).W))))
+	val pp = Wire(Vec(9, Vec(2, UInt((3 * grpnum + 3 + 1).W))))
 	val exp = Wire(Vec(9, UInt(9.W)))
 	val gen_pp_io = Vec.fill(9) {Module(new PPGenerator(grpnum)).io }
 	for(i <- 0 until 9) {
@@ -39,6 +40,8 @@ class PipelineMac(val grpnum: Int) extends Module {
 		pp(i)(0) := gen_pp_io(i).out.pp_1
 		pp(i)(1) := gen_pp_io(i).out.pp_2
 		exp(i) := gen_pp_io(i).out.exponent
+		// printf(p"PartialProduct_1 ${pp(i)(0)}\n")
+		// printf(p"PartialProduct_2 ${pp(i)(1)}\n")
 	}
 
 	// max exp determination
@@ -49,22 +52,23 @@ class PipelineMac(val grpnum: Int) extends Module {
 		max_determ_io.in.exp(i) := exp(i)
 	}
 	max_exp := max_determ_io.out.max_exp
+	// printf(p"MaxExponent ${max_exp}\n")
 
 	// 1st stage pipeline reg
-	val pp_reg = Reg(Vec(9, Vec(2, UInt((3*grpnum+3+1).W))))
+	val pp_reg = Reg(Vec(9, Vec(2, UInt((3 * grpnum + 3 + 1).W))))
 	val exp_reg  = Reg(Vec(9, UInt(9.W)))
 	val max_exp_reg  = Reg(Vec(9, UInt(9.W)))
 	val skip_2_reg = Reg(UInt(9.W))
 	for(i <- 0 until 9) {
 		pp_reg(i)(0) := Mux(skip_1_reg(8-i) === 0.U(1.W), pp(i)(0), pp_reg(i)(0))
-		pp_reg(i)(1) := Mux(skip_1_reg(8-i) === 0.U(1.W), pp(i)(0), pp_reg(i)(0))
+		pp_reg(i)(1) := Mux(skip_1_reg(8-i) === 0.U(1.W), pp(i)(1), pp_reg(i)(1))
 		exp_reg(i) := Mux(skip_1_reg(8-i) === 0.U(1.W), exp(i), exp_reg(i))
 		max_exp_reg(i) := Mux(skip_1_reg(8-i) === 0.U(1.W), max_exp, max_exp_reg(i))
 	}
 	skip_2_reg := skip_1_reg
 
 	// align
-	val align_pp = Wire(Vec(9, Vec(2, UInt((3*grpnum+3+15).W))))
+	val align_pp = Wire(Vec(9, Vec(2, UInt((3 * grpnum + 3 + 14 + 1).W))))
 	// align module here...
 	val align_pp_io = Vec.fill(9) {Module(new Align_CG2(3,8,3)).io }
 	for(i <- 0 until 9) {
@@ -75,44 +79,44 @@ class PipelineMac(val grpnum: Int) extends Module {
 		align_pp(i)(0) := align_pp_io(i).out.align_pp1
 		align_pp(i)(1) := align_pp_io(i).out.align_pp2
 	}
+	// printf(p"AlignPP1_in ${align_pp_io(0).in.pp1}\n")
+	// printf(p"AlignPP1_out ${align_pp(0)(0)}\n")
 
 	// sign adder
 	val sign_result = Wire(UInt(6.W))
 	val skip_3_reg = Reg(UInt(9.W))
 	val max_exp_reg_2 = Reg(UInt(9.W))
 	val sign_adder_io = Module(new SignAdder()).io
+	// printf(p"Align_pp_sign ${align_pp(0)(0)(23)}\n")
 	for(i <- 0 until 9) {
 		sign_adder_io.in(i)(0) := ~skip_2_reg(8-i)&align_pp(i)(0)(23)
 		sign_adder_io.in(i)(1) := ~skip_2_reg(8-i)&align_pp(i)(1)(23)
 	}
 	sign_result := sign_adder_io.out
+	printf(p"SignResult ${sign_result}\n")
 
 	// 2nd stage pipline reg
-	val align_pp_reg = Reg(Vec(9, Vec(2, UInt((3*grpnum+3+15).W))))
+	val align_pp_reg = Reg(Vec(9, Vec(2, UInt((3 * grpnum + 3 + 14 + 1).W))))
 	val sign_result_reg = Reg(UInt(6.W))
 	for(i <- 0 until 9) {
 		align_pp_reg(i)(0) := Mux(skip_2_reg(8-i)===0.U(1.W), align_pp(i)(0), align_pp_reg(i)(0))
 		align_pp_reg(i)(1) := Mux(skip_2_reg(8-i)===0.U(1.W), align_pp(i)(1), align_pp_reg(i)(1))
 	}
+	// printf(p"AlignPP1_Reg ${align_pp_reg(0)(0)}\n")
 	sign_result_reg := sign_result
 	max_exp_reg_2 := max_exp_reg(0)
 	skip_3_reg := skip_2_reg
 
 	// adder tree
-	val align_pp_tree = Wire(Vec(9, Vec(2, UInt((3*grpnum+3+15).W))))
 	val tree_adder_io = Module(new treeadder(5,8,3,23,23)).io
 	val out = Wire(UInt(28.W))
 	for(i <- 0 until 9) {
-		align_pp_tree(i)(0) := Mux(skip_3_reg(8-i), align_pp_reg(i)(0), 0.U(24.W))
-		align_pp_tree(i)(1) := Mux(skip_3_reg(8-i), align_pp_reg(i)(1), 0.U(24.W))
+		tree_adder_io.in(2*i) := Mux(skip_3_reg(8-i) === 0.U(1.W), align_pp_reg(i)(0)(22,0), 0.U(23.W))
+		tree_adder_io.in(2*i+1) := Mux(skip_3_reg(8-i) === 0.U(1.W), align_pp_reg(i)(1)(22,0), 0.U(23.W))
 	}
-
 	out := tree_adder_io.out
-	for(i <- 0 until 9) {
-		tree_adder_io.in(2*i) := align_pp_tree(i)(0)
-		tree_adder_io.in(2*i+1) := align_pp_tree(i)(1)
-	}
-	// adder tree module here
+	// printf(p"TreeAdder out ${out}\n")
+
 	val skip_4 = Wire(UInt(1.W))
 	skip_4 := skip_3_reg.andR
 
@@ -128,7 +132,7 @@ class PipelineMac(val grpnum: Int) extends Module {
 	val norm_sum = Wire(UInt(23.W))
 	val exp_diff = Wire(UInt(8.W))
 	val sign = Wire(UInt(1.W))
-	val norm_io = Module(new final_norm_noSUB(28, 23)).io
+	val norm_io = Module(new final_norm_noSUB(27, 23)).io
 	norm_io.input_exp := max_exp_reg_3
 	norm_io.PP_sum := out_reg
 	norm_sum := norm_io.norm_sum
